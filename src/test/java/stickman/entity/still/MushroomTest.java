@@ -10,11 +10,11 @@ import static org.junit.jupiter.api.Assertions.*;
  * Mushroom object that the player can pick up to get the ability to shoot.
  */
 public class MushroomTest {
-    private Mushroom m;
+    private static Mushroom m;
 
     @BeforeAll
-    public void setup() {
-        this.m = new Mushroom(0,0);
+    public static void setup() {
+        m = new Mushroom(0,0);
     }
 
     @Test
@@ -40,9 +40,19 @@ public class MushroomTest {
     }
 
     @Test
-    public void testInteractionMushroom() {
+    public void testFirstInteractionMushroom() {
         StickMan h = new StickMan(0, 0, "large", null);
         Mushroom interact = new Mushroom(0,0);
+        interact.interact(h);
+        assertFalse(interact.isActive());
+    }
+
+    @Test
+    public void testSecondInteractionMushroom() {
+        StickMan h = new StickMan(0, 0, "large", null);
+        Mushroom interact = new Mushroom(0,0);
+        interact.interact(h);
+        assertFalse(interact.isActive());
         interact.interact(h);
         assertFalse(interact.isActive());
     }
