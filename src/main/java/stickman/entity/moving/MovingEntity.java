@@ -50,7 +50,6 @@ public interface MovingEntity extends Entity {
                 }
             }
         }
-
         return res;
     }
 

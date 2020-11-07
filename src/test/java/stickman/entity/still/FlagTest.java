@@ -36,7 +36,7 @@ public class FlagTest  {
 
     @Test
     public void testInteractionFlag() {
-        Level l = LevelBuilderImpl.generateFromFile("levels/flagtest.json", null);
+        Level l = LevelBuilderImpl.generateFromFile("levels/test/flagtest.json", null);
         l.tick();
         assertTrue(l.getEntities().stream().anyMatch(Win.class::isInstance));
     }

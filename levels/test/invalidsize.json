@@ -1,0 +1,19 @@
+{
+  "stickmanSize": "HUGE",
+  "stickmanPos": {
+    "x": 50.0
+  },
+  "cloudVelocity": 3.2,
+  "levelDimensions": {
+    "width": 800.0,
+    "height": 600.0,
+    "floorHeight": 350.0
+  },
+  "platforms": [],
+  "mushrooms": [],
+  "enemies": [],
+  "flag": {
+    "x": 700.0,
+    "y": 350.0
+  }
+}

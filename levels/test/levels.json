@@ -1,0 +1,7 @@
+{
+  "levelFiles": [
+    "test/obstructed.json",
+    "test/normalstickman.json",
+    "test/largestickman.json",
+  ]
+}
