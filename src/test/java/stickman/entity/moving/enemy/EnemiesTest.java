@@ -1,19 +1,18 @@
 package stickman.entity.moving.enemy;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.*;
 import stickman.entity.Entity;
-import stickman.entity.moving.player.StickMan;
 import stickman.level.Level;
 import stickman.level.LevelBuilderImpl;
+
+import static org.junit.Assert.assertTrue;
 
 public class EnemiesTest {
     private static Level level;
     private static Slime dumbSlime;
 
-    @BeforeAll
-    public static void setup() {
+    @Before
+    public void setup() {
         level = LevelBuilderImpl.generateFromFile("levels/test/obstructed.json", null);
         for (Entity e : level.getEntities()) {
             if (e instanceof Slime) {

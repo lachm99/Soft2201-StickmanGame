@@ -139,7 +139,7 @@ public class StickMan extends MovingObject implements Controllable {
         this.right = true;
         this.left = false;
         faceRight();
-        return horizontalRaycast(false, this.level.getEntities(), level.getWidth()) > 0;
+        return horizontalRaycast(false, this.level.getEntities(), 0) > 0;
     }
 
     @Override

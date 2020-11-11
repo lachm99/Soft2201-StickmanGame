@@ -1,20 +1,23 @@
 package stickman.entity.moving.other;
 
-import org.junit.jupiter.api.*;
+
+
+import org.junit.Before;
+import org.junit.Test;
+import static org.junit.Assert.*;
 import stickman.entity.Entity;
 import stickman.entity.moving.player.StickMan;
 import stickman.level.Level;
 import stickman.level.LevelBuilderImpl;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 public class BulletTest {
     private static Level l;
     private static StickMan hero;
 
 
-    @BeforeAll
-    public static void setup() {
+    @Before
+    public void setup() {
         l = LevelBuilderImpl.generateFromFile("levels/test/normalstickman.json", null);
         for (Entity e:l.getEntities()) {
             if (e instanceof StickMan) {
@@ -28,8 +31,8 @@ public class BulletTest {
     @Test
     public void testConstruction() {
         Bullet newBullet = new Bullet(0, 0, false);
-        assertEquals(0, newBullet.getXPos());
-        assertEquals(0, newBullet.getXPos());
+        assertEquals(0, newBullet.getXPos(), 0.1);
+        assertEquals(0, newBullet.getXPos(), 0.1);
     }
 
     @Test

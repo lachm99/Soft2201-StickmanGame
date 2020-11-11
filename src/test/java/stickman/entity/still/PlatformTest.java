@@ -1,16 +1,16 @@
 package stickman.entity.still;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.Before;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 public class PlatformTest {
     private static Platform p;
 
-    @BeforeAll
-    public static void setup() {
+    @Before
+    public void setup() {
         p = new Platform(0,0);
     }
 
@@ -22,8 +22,8 @@ public class PlatformTest {
 
     @Test
     public void testCoords() {
-        assertEquals(0, p.getXPos());
-        assertEquals(0, p.getYPos());
+        assertEquals(0, p.getXPos(), 0.1);
+        assertEquals(0, p.getYPos(), 0.1);
     }
 
     @Test

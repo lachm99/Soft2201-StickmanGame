@@ -1,10 +1,11 @@
 package stickman.entity.still;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import stickman.entity.moving.player.StickMan;
 
-import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.Before;
+import org.junit.Test;
+import static org.junit.Assert.*;
+import stickman.entity.moving.player.StickMan;
 
 /**
  * Mushroom object that the player can pick up to get the ability to shoot.
@@ -12,8 +13,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public class MushroomTest {
     private static Mushroom m;
 
-    @BeforeAll
-    public static void setup() {
+    @Before
+    public void setup() {
         m = new Mushroom(0,0);
     }
 
@@ -25,8 +26,8 @@ public class MushroomTest {
 
     @Test
     public void testCoords() {
-        assertEquals(0, m.getXPos());
-        assertEquals(0, m.getYPos());
+        assertEquals(0, m.getXPos(), 0.1);
+        assertEquals(0, m.getYPos(), 0.1);
     }
 
     @Test

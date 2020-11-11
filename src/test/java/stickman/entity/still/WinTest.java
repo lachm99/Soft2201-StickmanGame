@@ -1,16 +1,17 @@
 package stickman.entity.still;
 
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 
+
+import org.junit.Before;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 public class WinTest {
 
     private static Win w;
 
-    @BeforeAll
-    public static void setup() {
+    @Before
+    public void setup() {
         w = new Win(0,0);
     }
 
@@ -22,8 +23,8 @@ public class WinTest {
 
     @Test
     public void testCoords() {
-        assertEquals(0, w.getXPos());
-        assertEquals(0, w.getYPos());
+        assertEquals(0, w.getXPos(), 0.1);
+        assertEquals(0, w.getYPos(), 0.1);
     }
 
     @Test

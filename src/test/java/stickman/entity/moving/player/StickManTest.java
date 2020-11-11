@@ -1,13 +1,14 @@
 package stickman.entity.moving.player;
 
-import org.junit.jupiter.api.*;
+import org.junit.Before;
+import org.junit.Test;
 import stickman.entity.Entity;
 import stickman.level.Level;
-import static org.junit.jupiter.api.Assertions.*;
 
 import stickman.level.LevelBuilderImpl;
 
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+import static org.junit.Assert.*;
+
 public class StickManTest {
     private static Level normal;
     private static StickMan normalHero;
@@ -17,8 +18,8 @@ public class StickManTest {
     private static StickMan obstructedHero;
 
 
-    @BeforeAll
-    public static void setup() {
+    @Before
+    public void setup() {
         normal = LevelBuilderImpl.generateFromFile("levels/test/normalstickman.json", null);
         for (Entity e:normal.getEntities()) {
             if (e instanceof StickMan) {
@@ -41,33 +42,32 @@ public class StickManTest {
 
 
     @Test
-    @Order(1)
     public void testConstructionValuesNormal() {
-        assertEquals(50, normalHero.getXPos());
-        assertEquals(350, normalHero.getYPos() + normalHero.getHeight());
-        assertEquals(StickMan.NORMAL_HEIGHT, normalHero.getHeight());
-        assertEquals(StickMan.NORMAL_WIDTH, normalHero.getWidth());
+        assertEquals(50, normalHero.getXPos(), 0.1);
+        assertEquals(350, normalHero.getYPos() + normalHero.getHeight(), 0.1);
+        assertEquals(StickMan.NORMAL_HEIGHT, normalHero.getHeight(), 0.1);
+        assertEquals(StickMan.NORMAL_WIDTH, normalHero.getWidth(), 0.1);
         assertFalse(normalHero.upgraded());
+        assertTrue(normalHero.getImagePath().equals("ch_stand1.png"));
+        assertTrue(normalHero.getLayer() == Entity.Layer.FOREGROUND);
     }
 
     @Test
-    @Order(2)
     public void testConstructionValuesLarge() {
-        assertEquals(50, largeHero.getXPos());
-        assertEquals(350, largeHero.getYPos() + largeHero.getHeight());
-        assertEquals(StickMan.LARGE_HEIGHT, largeHero.getHeight());
+        assertEquals(50, largeHero.getXPos(), 0.1);
+        assertEquals(350, largeHero.getYPos() + largeHero.getHeight(), 0.1);
+        assertEquals(StickMan.LARGE_HEIGHT, largeHero.getHeight(), 0.1);
         assertFalse(largeHero.upgraded());
     }
     @Test
-    @Order(3)
     public void testConstructionValuesInvalidSize() {
         Level invalid = LevelBuilderImpl.generateFromFile("levels/test/invalidsize.json", null);
         StickMan inv;
         for (Entity e:invalid.getEntities()) {
             if (e instanceof StickMan) {
                  inv = (StickMan) e;
-                assertEquals(0, inv.getHeight());
-                assertEquals(0, inv.getWidth());
+                assertEquals(0, inv.getHeight(), 0.1);
+                assertEquals(0, inv.getWidth(), 0.1);
             }
         }
     }

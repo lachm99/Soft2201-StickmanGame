@@ -1,18 +1,19 @@
 package stickman.entity.still;
 
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 
+import org.junit.Before;
+import org.junit.Test;
+import static org.junit.Assert.*;
 import stickman.level.Level;
 import stickman.level.LevelBuilderImpl;
+
 
 
 public class FlagTest  {
     private static Flag f;
 
-    @BeforeAll
-    public static void setup() {
+    @Before
+    public void setup() {
         f = new Flag(0,0);
     }
 
@@ -24,8 +25,8 @@ public class FlagTest  {
 
     @Test
     public void testCoords() {
-        assertEquals(0, f.getXPos());
-        assertEquals(0, f.getYPos());
+        assertEquals(0, f.getXPos(), 0.1);
+        assertEquals(0, f.getYPos(), 0.1);
     }
 
 
