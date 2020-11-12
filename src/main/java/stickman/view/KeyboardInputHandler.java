@@ -74,6 +74,13 @@ class KeyboardInputHandler {
                 jumpPlayer.play();
             }
         }
+        if (keyEvent.getCode().equals(KeyCode.Q)) {
+            model.save();
+        }
+        if (keyEvent.getCode().equals(KeyCode.L)) {
+            model.load();
+        }
+
 
         if (keyEvent.getCode().equals(KeyCode.LEFT)) {
             left = true;

@@ -52,4 +52,16 @@ public interface GameEngine {
      * Restarts the level.
      */
     void reset();
+
+
+    /**
+     * Takes an image of the current GameEngine state.
+     */
+    void save();
+
+
+    /**
+     * Reconstruct gameEngines saved state.
+     */
+    void load();
 }

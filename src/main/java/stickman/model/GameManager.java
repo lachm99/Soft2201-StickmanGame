@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Implementation of GameEngine. Manages the running of the game.
  */
-public class GameManager implements GameEngine {
+public class GameManager implements GameEngine, Originator {
 
     /**
      * The current level
@@ -24,18 +24,36 @@ public class GameManager implements GameEngine {
     private Level level;
 
     /**
+     * The list of all levels constructed.
+     */
+    private List<Level> levels;
+
+    /**
      * List of all level files
      */
     private List<String> levelFileNames;
 
+
+    /**
+     * Current saved state of the game engine.
+     */
+    private Memento savedState;
+
     /**
      * Creates a GameManager object.
+     *
      * @param levels The config file containing the names of all the levels
+     *               <p>
+     *               Generates all levels, and selects the first one as the current level.
      */
     public GameManager(String levels) {
         this.levelFileNames = this.readConfigFile(levels);
 
-        this.level = LevelBuilderImpl.generateFromFile(levelFileNames.get(0), this);
+        for (String name : this.levelFileNames) {
+            this.levels.add(LevelBuilderImpl.generateFromFile(name, this));
+        }
+
+        this.level = this.levels.get(0);
     }
 
     @Override
@@ -80,6 +98,7 @@ public class GameManager implements GameEngine {
 
     /**
      * Retrieves the list of level filenames from a config file
+     *
      * @param config The config file
      * @return The list of level names
      */
@@ -116,4 +135,23 @@ public class GameManager implements GameEngine {
         return res;
     }
 
+    @Override
+    public Memento makeSnapshot() {
+        return new Memento(this);
+    }
+
+    @Override
+    public void restoreSnapshot(Memento m) {
+        // this.state = m.state.
+    }
+
+
+    public void save() {
+        this.savedState = this.makeSnapshot();
+    }
+
+    public void load() {
+        restoreSnapshot(this.savedState);
+    }
 }
+
