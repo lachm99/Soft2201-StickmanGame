@@ -20,7 +20,7 @@ public class LevelTest  {
 
     @Before
     public void setup() {
-        testGameManager = new GameManager("levels/test/levels.json");
+        testGameManager = new GameManager("levels/levels.json");
         testLevel = testGameManager.getCurrentLevel();
         for (Entity e : testLevel.getEntities()) {
             if (e instanceof Slime) {

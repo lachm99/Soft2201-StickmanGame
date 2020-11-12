@@ -4,8 +4,6 @@ package stickman.entity.still;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import stickman.level.Level;
-import stickman.level.LevelBuilderImpl;
 
 
 
@@ -33,13 +31,6 @@ public class FlagTest  {
     @Test
     public void testSolidity() {
         assertFalse(f.isSolid());
-    }
-
-    @Test
-    public void testInteractionFlag() {
-        Level l = LevelBuilderImpl.generateFromFile("levels/test/flagtest.json", null);
-        l.tick();
-        assertTrue(l.getEntities().stream().anyMatch(Win.class::isInstance));
     }
 
 }

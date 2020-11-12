@@ -10,7 +10,7 @@ public class GameManagerTest {
 
     @Before
     public void setup() {
-        testGameManager = new GameManager("levels/test/levels.json");
+        testGameManager = new GameManager("levels/levels.json");
     }
 
     @Test
