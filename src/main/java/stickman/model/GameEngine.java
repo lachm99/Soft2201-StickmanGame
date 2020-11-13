@@ -41,15 +41,17 @@ public interface GameEngine extends Originator {
     /** Handle the consequences of a single stage being won
      *
      */
+
+    /**
+     * Win the current level. Will check for overall victory
+     */
     void winLevel();
 
     /**
-     * End the game -
-     * @param gameWon determines whether game is over due to all stages completed or all lives spent.
+     * Lose the current level. Will check for overall loss.
      */
-    void finishGame(boolean gameWon);
+    void loseLevel();
 
-    int getGameState();
 
     /**
      * Makes the player jump.
@@ -85,12 +87,17 @@ public interface GameEngine extends Originator {
      */
     void shoot();
 
-    void startLevel(int index);
 
     /**
-     * Restarts the level.
+     * Restarts the current level.
      */
     void reset();
+
+    /**
+     * Starts the level with index
+     * @param index; from the filename with the specified index in the config file.
+     */
+    void startLevel(int index);
 
 
     /**
@@ -103,7 +110,6 @@ public interface GameEngine extends Originator {
      * Requests a load - will pass in a saved snapshot to restoreSnapshot.
      */
     void load();
-
 
 
     /**

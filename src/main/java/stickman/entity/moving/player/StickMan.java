@@ -14,7 +14,7 @@ public class StickMan extends MovingObject implements Controllable {
     /**
      * The maximum speed the player can move horizontally.
      */
-    public static final double HORIZONTAL_SPEED = 1;
+    public static final double HORIZONTAL_SPEED = 5;
 
     /**
      * The height of the player when normal sized.
@@ -215,6 +215,10 @@ public class StickMan extends MovingObject implements Controllable {
     private void faceRight() {
         this.leftFacing = false;
         this.imagePath = "ch_stand1.png";
+    }
+
+    public void awardPoints(int amount) {
+        this.level.adjustScore(amount);
     }
 
 }

@@ -55,8 +55,10 @@ public class BlockedBackground implements BackgroundDrawer {
         pane.getChildren().addAll(sky, floor);
     }
 
+
     @Override
     public void update(double xViewportOffset, double yViewportOffset) {
+        this.floorHeight = model.getCurrentLevel().getFloorHeight();
         this.floor.setY(floorHeight - yViewportOffset);
     }
 }

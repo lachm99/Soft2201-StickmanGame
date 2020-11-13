@@ -28,6 +28,7 @@ public class Mushroom extends GameObject implements Interactable {
         if (this.active) {
             this.active = false;
             hero.upgrade();
+            hero.awardPoints(50);
         }
     }
 }

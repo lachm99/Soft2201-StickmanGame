@@ -130,18 +130,6 @@ public class GameWindow {
      * Draws the game (and updates it).
      */
     private void draw() {
-
-        // Check that the game is in a finish state.
-        if (model.getGameState() == 1) {
-            pane.getChildren().clear();
-            // TODO draw a win state page.
-            return;
-        } else if (model.getGameState() == -1) {
-            // TODO drawn a lose state page.
-            pane.getChildren().clear();
-            return;
-        }
-
         model.tick();
         informationGroup.updateInformation();
         List<Entity> entities = model.getCurrentLevel().getEntities();

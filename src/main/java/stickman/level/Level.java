@@ -87,7 +87,7 @@ public interface Level {
     /**
      * Called when the hero touches the flag.
      */
-    void winLevel();
+    void win();
 
     /**
      * Makes the player shoot.

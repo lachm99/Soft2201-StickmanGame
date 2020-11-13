@@ -1,7 +1,10 @@
 package stickman.entity.moving.other;
 
 import stickman.entity.Entity;
+import stickman.entity.moving.MovingEntity;
 import stickman.entity.moving.MovingObject;
+import stickman.entity.moving.player.Controllable;
+import stickman.entity.moving.player.StickMan;
 
 import java.util.List;
 
@@ -26,16 +29,20 @@ public class Bullet extends MovingObject implements Projectile {
     public static final double BULLET_HEIGHT = 10;
 
     /**
-     * Constructs a bullet object.
-     * @param x The x-coordinate
-     * @param y The y-coordinate
-     * @param left Whether the bullet is moving left or right
+     * The Controllable entity that shot the bullet.
      */
-    public Bullet(double x, double y, boolean left) {
-        super("bullet.png", x, y, BULLET_HEIGHT, BULLET_WIDTH, Layer.FOREGROUND);
+    private final Controllable originator;
 
-        this.xVelocity = left ? -BULLET_SPEED : BULLET_SPEED;
+    /**
+     * Constructs a bullet object.
+     * @param shooter the originator of the shot.
+     */
+    public Bullet(Controllable shooter) {
+        super("bullet.png", shooter.getXPos(), shooter.getYPos() + shooter.getHeight()/3, BULLET_HEIGHT, BULLET_WIDTH, Layer.FOREGROUND);
+        this.xVelocity = shooter.isLeftFacing() ? -BULLET_SPEED : BULLET_SPEED;
+        this.xPos = shooter.isLeftFacing() ? this.xPos : this.xPos + shooter.getWidth();
         this.yVelocity = 0;
+        this.originator = shooter;
     }
 
     @Override
@@ -52,5 +59,10 @@ public class Bullet extends MovingObject implements Projectile {
     @Override
     public void stop() {
         this.active = false;
+    }
+
+    @Override
+    public Controllable getOriginator() {
+        return this.originator;
     }
 }

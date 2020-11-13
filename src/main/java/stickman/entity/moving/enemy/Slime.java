@@ -65,4 +65,9 @@ public class Slime extends MovingObject implements Interactable {
     public void interact(Controllable hero) {
         hero.die();
     }
+
+    @Override
+    public int getWorth() {
+        return 100;
+    }
 }

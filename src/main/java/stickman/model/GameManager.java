@@ -4,6 +4,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import stickman.entity.still.GameOver;
+import stickman.entity.still.Win;
 import stickman.level.*;
 
 import java.io.FileReader;
@@ -29,12 +31,7 @@ public class GameManager implements GameEngine {
     private Level currentLevel;
 
     /**
-     * The list of all levels constructed.
-     */
-    private List<Level> levels;
-
-    /**
-     * List of all level files
+     * List of all level file names.
      */
     private List<String> levelFileNames;
 
@@ -70,15 +67,10 @@ public class GameManager implements GameEngine {
      */
     public GameManager(String configFile) {
         this.gameState = 0;
-        this.levelFileNames = this.readConfigFileLevels(configFile);
         this.extraLivesRemaining = this.readConfigFileLives(configFile);
 
-        this.levels = new ArrayList<>();
-        for (String name : this.levelFileNames) {
-            this.levels.add(LevelBuilderImpl.generateFromFile(name, this));
-        }
-        this.levelIndex = 0;
-        this.currentLevel = this.levels.get(this.levelIndex);
+        this.levelFileNames = this.readConfigFileLevels(configFile);
+        startLevel(0);
     }
 
     @Override
@@ -109,23 +101,20 @@ public class GameManager implements GameEngine {
     @Override
     public void winLevel() {
         this.adjustCumulativeScore(this.getCurrentLevel().getCurrentScore());
-        if (this.levelIndex == this.levels.size()) {
-            this.finishGame(true);
-        }
-    }
-
-    @Override
-    public void finishGame(boolean gameWon) {
-        if (gameWon) {
-            this.gameState = 1;
+        if (++levelIndex < this.levelFileNames.size()) {
+            this.reset();
         } else {
-            this.gameState = -1;
+            this.getCurrentLevel().getEntities().add(new Win(this.getCurrentLevel().getHeroX() - 270, this.getCurrentLevel().getHeroY() - 100));
         }
     }
 
     @Override
-    public int getGameState() {
-        return this.gameState;
+    public void loseLevel() {
+        if (--this.extraLivesRemaining > 0) {
+            this.reset();
+        } else {
+            this.getCurrentLevel().getEntities().add(new GameOver(this.getCurrentLevel().getHeroX() - 270, this.getCurrentLevel().getHeroY() - 100));
+        }
     }
 
     @Override
@@ -216,7 +205,7 @@ public class GameManager implements GameEngine {
 
             JSONObject object = (JSONObject) parser.parse(reader);
 
-            return  Integer.parseInt(String.valueOf(object.get("extraLives")));
+            return  Integer.parseInt(String.valueOf(object.get("lives")));
 
         } catch (IOException e) {
             System.exit(10);

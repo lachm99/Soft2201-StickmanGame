@@ -6,6 +6,7 @@ import stickman.entity.moving.other.Bullet;
 import stickman.entity.moving.other.Projectile;
 import stickman.entity.moving.player.Controllable;
 import stickman.entity.moving.player.StickMan;
+import stickman.entity.still.GameOver;
 import stickman.model.GameEngine;
 
 import java.util.ArrayList;
@@ -278,16 +279,15 @@ public class LevelManager implements Level {
     @Override
     public void loseALife() {
         if (this.model != null) {
-            if (this.model.loseALife() <= 0) {
-                model.finishGame(false);
-            } else {
-                this.reset();
-            }
+            this.active = false;
+            this.adjustScore(Math.max(this.targetTime - this.timeElapsed, 0));
+            model.loseLevel();
         }
     }
 
     @Override
-    public void winLevel() {
+    public void win() {
+        this.active = false;
         this.adjustScore(Math.max(this.targetTime - this.timeElapsed, 0));
         this.model.winLevel();
     }
@@ -298,13 +298,7 @@ public class LevelManager implements Level {
             return;
         }
 
-        double x = this.hero.getXPos() + this.hero.getWidth();
-
-        if (this.hero.isLeftFacing()) {
-            x = this.hero.getXPos();
-        }
-
-        Projectile bullet = new Bullet(x, this.hero.getYPos() + (2 * this.hero.getWidth() / 3), this.hero.isLeftFacing());
+        Projectile bullet = new Bullet(hero);
 
         this.entities.add(bullet);
         this.movingEntities.add(bullet);

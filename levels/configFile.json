@@ -4,5 +4,5 @@
     "empty.json",
     "default.json"
   ],
-  "extraLives": 3
+  "lives": 3
 }

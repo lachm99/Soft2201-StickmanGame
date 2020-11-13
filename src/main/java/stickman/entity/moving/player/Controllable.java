@@ -36,6 +36,13 @@ public interface Controllable extends MovingEntity {
      */
     void upgrade();
 
+
+    /**
+     * Awards the hero with
+     * @param amount of points
+     */
+    void awardPoints(int amount);
+
     /**
      * Returns true if the player is facing left.
      * @return Whether player is left facing
