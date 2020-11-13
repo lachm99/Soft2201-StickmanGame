@@ -15,6 +15,8 @@ public interface GameEngine extends Originator {
     Level getCurrentLevel();
 
 
+    int getLevelIndex();
+
     /**
      * Gets the current cumulative score for all previous levels
      * @return Cumulative score.

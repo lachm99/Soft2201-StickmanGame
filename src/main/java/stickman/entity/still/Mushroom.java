@@ -1,5 +1,6 @@
 package stickman.entity.still;
 
+import stickman.entity.Entity;
 import stickman.entity.GameObject;
 import stickman.entity.moving.player.Controllable;
 import stickman.entity.Interactable;
@@ -21,6 +22,13 @@ public class Mushroom extends GameObject implements Interactable {
     @Override
     public boolean isSolid() {
         return false;
+    }
+
+    @Override
+    public Entity copy() {
+        Mushroom clone = new Mushroom(this.xPos, this.yPos);
+        clone.active = this.active;
+        return clone;
     }
 
     @Override

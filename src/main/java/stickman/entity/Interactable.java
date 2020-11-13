@@ -13,5 +13,4 @@ public interface Interactable extends Entity {
      * Called when the player collides with the entity.
      * @param hero The hero object
      */
-    void interact(Controllable hero);
-}
+    void interact(Controllable hero);}

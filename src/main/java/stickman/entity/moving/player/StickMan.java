@@ -101,6 +101,23 @@ public class StickMan extends MovingObject implements Controllable {
         this.yPos -= this.height;
     }
 
+    private StickMan(StickMan original, Level copyOwner) {
+        super("ch_stand1.png", original.xPos, 0, original.height, original.width, Layer.FOREGROUND);
+        this.yPos = original.yPos;
+        this.xVelocity = original.xVelocity;
+        this.yVelocity = original.yVelocity;
+        this.size = original.size;
+        if (original.leftFacing) {
+            this.faceLeft();
+        } else {
+            this.faceRight();
+        }
+
+        this.level = copyOwner;
+        this.upgraded = original.upgraded;
+        this.active = original.active;
+    }
+
     @Override
     public void tick(List<Entity> entities, double heroX, double floorHeight) {
 
@@ -201,6 +218,7 @@ public class StickMan extends MovingObject implements Controllable {
         return false;
     }
 
+
     /**
      * Turns the player left and updates the sprite.
      */
@@ -220,5 +238,26 @@ public class StickMan extends MovingObject implements Controllable {
     public void awardPoints(int amount) {
         this.level.adjustScore(amount);
     }
+
+    /**
+     * Should never be used.
+     * @return A copy with no owner.
+     */
+    @Override
+    public Entity copy() {
+        return this.copyToLevel(null);
+    }
+
+
+    /**
+     * A deep copy method, where the copy is full except the stickman belongs to a new level - provided.
+     * @param copyOwner - The level that this cloned stickman belongs to.
+     * @return A new stickman.
+     */
+    @Override
+    public Controllable copyToLevel(Level copyOwner) {
+        return new StickMan(this, copyOwner);
+    }
+
 
 }

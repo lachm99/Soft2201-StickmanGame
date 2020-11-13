@@ -73,4 +73,9 @@ public interface Entity {
     enum Layer{
         BACKGROUND, FOREGROUND, EFFECT
     }
+
+    /**
+     * @return a deep copy of this entity.
+     */
+    Entity copy();
 }

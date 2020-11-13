@@ -53,10 +53,6 @@ public class GameManager implements GameEngine {
      */
     private Memento savedState;
 
-    /**
-     * Describes the state of the game: 1=WON, -1=GAMEOVER, 0=PLAYING.
-     */
-    private int gameState;
 
     /**
      * Creates a GameManager object.
@@ -66,7 +62,6 @@ public class GameManager implements GameEngine {
      * Generates all levels, and selects the first one as the current level.
      */
     public GameManager(String configFile) {
-        this.gameState = 0;
         this.extraLivesRemaining = this.readConfigFileLives(configFile);
 
         this.levelFileNames = this.readConfigFileLevels(configFile);
@@ -76,6 +71,11 @@ public class GameManager implements GameEngine {
     @Override
     public Level getCurrentLevel() {
         return this.currentLevel;
+    }
+
+    @Override
+    public int getLevelIndex() {
+        return this.levelIndex;
     }
 
     @Override
@@ -223,18 +223,29 @@ public class GameManager implements GameEngine {
 
     @Override
     public void restoreSnapshot(Memento m) {
-        // this.state = m.state.
+        if (m.retrieveSavedLevel() == null) {
+            return;
+        }
+        this.currentLevel = m.retrieveSavedLevel().deepCopy();
+        this.levelIndex = m.retrieveSavedLevelIndex();
+        this.extraLivesRemaining = m.retrieveSavedLivesRemaining();
+        this.cumulativeScore = m.retrieveSavedCumulativeScore();
     }
 
 
     @Override
     public void save() {
-        this.savedState = this.makeSnapshot();
+        Memento saveState = this.makeSnapshot();
+        if (saveState != null) {
+            this.savedState = this.makeSnapshot();
+        }
     }
 
     @Override
     public void load() {
-        restoreSnapshot(this.savedState);
+        if (this.savedState != null) {
+            restoreSnapshot(this.savedState);
+        }
     }
 }
 

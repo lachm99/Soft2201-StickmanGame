@@ -3,6 +3,7 @@ package stickman.entity.moving.other;
 import stickman.entity.Entity;
 import stickman.entity.moving.MovingEntity;
 import stickman.entity.moving.player.Controllable;
+import stickman.level.Level;
 
 import java.util.List;
 
@@ -17,11 +18,6 @@ public interface Projectile extends MovingEntity {
     void stop();
 
     /**
-     * @return the source controllable player of this projectile
-     */
-    Controllable getOriginator();
-
-    /**
      * Checks for collisions with other moving entities. If there is a collision,
      * both entities become inactive.
      * @param movingEntities List of moving entities in the level
@@ -31,7 +27,7 @@ public interface Projectile extends MovingEntity {
             if (movingEntity != this) {
                 if (this.checkCollide(movingEntity) && movingEntity.isActive()) {
                     movingEntity.die();
-                    this.getOriginator().awardPoints(movingEntity.getWorth());
+                    this.getLevel().adjustScore(movingEntity.getWorth());
                     this.stop();
                     return;
                 }
@@ -54,4 +50,13 @@ public interface Projectile extends MovingEntity {
             }
         }
     }
+
+    /**
+     *
+     * @return the level that this projectile belongs to.
+     */
+    Level getLevel();
+
+
+    Projectile copyToLevel(Level copyOwner);
 }

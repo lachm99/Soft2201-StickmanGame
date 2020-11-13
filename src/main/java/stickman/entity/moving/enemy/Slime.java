@@ -42,6 +42,16 @@ public class Slime extends MovingObject implements Interactable {
         this.strategy = strategy;
     }
 
+    private Slime(Slime copyFrom) {
+        super(copyFrom.imagePath, copyFrom.xPos, copyFrom.yPos, 20, 30, Layer.FOREGROUND);
+        this.xVelocity = copyFrom.xVelocity;
+        this.yVelocity = copyFrom.yVelocity;
+        this.left = copyFrom.left;
+        // TODO check if this strategy needs a deep copy.
+        this.strategy = copyFrom.strategy;
+        this.active = copyFrom.active;
+    }
+
     @Override
     public void tick(List<Entity> entities, double heroX, double floorHeight) {
 
@@ -59,6 +69,11 @@ public class Slime extends MovingObject implements Interactable {
     @Override
     public boolean isSolid() {
         return false;
+    }
+
+    @Override
+    public Entity copy() {
+        return new Slime(this);
     }
 
     @Override

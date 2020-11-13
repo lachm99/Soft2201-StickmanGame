@@ -1,6 +1,9 @@
 package stickman.entity.moving.player;
 
 import stickman.entity.moving.MovingEntity;
+import stickman.entity.moving.other.Projectile;
+import stickman.level.Level;
+import stickman.level.LevelManager;
 
 /**
  * Interface describing the behaviours of a Player controlled character.
@@ -59,4 +62,6 @@ public interface Controllable extends MovingEntity {
      * Called when the player reaches the flag.
      */
     void win();
+
+    Controllable copyToLevel(Level level);
 }

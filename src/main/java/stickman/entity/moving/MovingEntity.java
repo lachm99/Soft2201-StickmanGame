@@ -1,6 +1,7 @@
 package stickman.entity.moving;
 
 import stickman.entity.Entity;
+import stickman.entity.moving.other.Projectile;
 
 import java.util.List;
 

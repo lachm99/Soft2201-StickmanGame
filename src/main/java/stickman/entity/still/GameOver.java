@@ -1,5 +1,6 @@
 package stickman.entity.still;
 
+import stickman.entity.Entity;
 import stickman.entity.GameObject;
 
 /**
@@ -19,5 +20,10 @@ public class GameOver extends GameObject {
     @Override
     public boolean isSolid() {
         return false;
+    }
+
+    @Override
+    public Entity copy() {
+        return new GameOver(this.xPos, this.yPos);
     }
 }

@@ -99,7 +99,7 @@ public class LevelManager implements Level {
 
 
     /**
-     * Creates a new LevelManager object.
+     * PUBLIC constructor - creates a new level manager based off various parameters.
      * @param model The GameEngine the level is in
      * @param filename The file the level is based off of
      * @param height The height of the level
@@ -136,8 +136,65 @@ public class LevelManager implements Level {
         this.active = true;
         this.tickCounter = 0;
         this.timeElapsed = 0;
-
     }
+
+
+    /**
+     * Private constructor - called only by the copy method.
+     * @param copyFrom An origin of the copy.
+     */
+    private LevelManager(LevelManager copyFrom) {
+        this.model = copyFrom.model;
+        this.filename = copyFrom.filename;
+        this.height = copyFrom.height;
+        this.width = copyFrom.width;
+        this.floorHeight = copyFrom.floorHeight;
+        this.targetTime = copyFrom.targetTime;
+
+        // Copy all entities.
+        this.entities = new ArrayList<>();
+        this.movingEntities = new ArrayList<>();
+        this.interactables = new ArrayList<>();
+        this.projectiles = new ArrayList<>();
+
+        for (Entity e : copyFrom.entities) {
+            if (e instanceof Projectile) {
+                Projectile eCopy = ((Projectile)e).copyToLevel(this);
+                this.projectiles.add(eCopy);
+                this.movingEntities.add(eCopy);
+                this.entities.add(eCopy);
+            } else if (e instanceof Controllable) {
+                Controllable eCopy = ((Controllable)e).copyToLevel(this);
+                this.hero = eCopy;
+                this.movingEntities.add(eCopy);
+                this.entities.add(eCopy);
+            } else if (e instanceof MovingEntity) {
+                if (e instanceof Interactable) {
+                    Entity eCopy = e.copy();
+                    this.interactables.add((Interactable) eCopy);
+                    this.movingEntities.add((MovingEntity) eCopy);
+                    this.entities.add(eCopy);
+                } else {
+                    MovingEntity eCopy = (MovingEntity) e.copy();
+                    this.movingEntities.add(eCopy);
+                    this.entities.add(eCopy);
+                }
+            } else if (e instanceof Interactable) {
+                Interactable eCopy = (Interactable) e.copy();
+                this.interactables.add(eCopy);
+                this.entities.add(eCopy);
+            } else {
+                Entity eCopy = e.copy();
+                this.entities.add(eCopy);
+            }
+        }
+        this.active = copyFrom.active;
+        this.tickCounter = copyFrom.tickCounter;
+        this.timeElapsed = copyFrom.timeElapsed;
+        this.levelScore = copyFrom.levelScore;
+    }
+
+
 
     @Override
     public List<Entity> getEntities() {
@@ -280,7 +337,6 @@ public class LevelManager implements Level {
     public void loseALife() {
         if (this.model != null) {
             this.active = false;
-            this.adjustScore(Math.max(this.targetTime - this.timeElapsed, 0));
             model.loseLevel();
         }
     }
@@ -297,8 +353,12 @@ public class LevelManager implements Level {
         if (!this.hero.upgraded() || !active) {
             return;
         }
+        double x = this.hero.getXPos() + this.hero.getWidth();
 
-        Projectile bullet = new Bullet(hero);
+        if (this.hero.isLeftFacing()) {
+            x = this.hero.getXPos();
+        }
+        Projectile bullet = new Bullet(x, this.hero.getYPos() + (2 * this.hero.getWidth() / 3), this.hero.isLeftFacing(), this);
 
         this.entities.add(bullet);
         this.movingEntities.add(bullet);
@@ -306,9 +366,17 @@ public class LevelManager implements Level {
     }
 
 
+    /**
+     * Get a deep copy of this level. Complex. Involves construction of a new level, with entities that are
+     * owned by that level but have the same interaction with eachother as the old level did.
+     * @return The deeply copied level.
+     */
     @Override
     public Level deepCopy() {
-        return null;
+        if (!this.active) {
+            return null;
+        }
+        return new LevelManager(this);
     }
 
     @Override
