@@ -11,6 +11,7 @@ import stickman.model.GameEngine;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * The window the Game exists within.
  */
@@ -62,6 +63,11 @@ public class GameWindow {
     private BackgroundDrawer backgroundDrawer;
 
     /**
+     * The Overlay of information that is displayed.
+     */
+    private InformationGroup informationGroup;
+
+    /**
      * The x-offset of the camera.
      */
     private double xViewportOffset = 0.0;
@@ -70,6 +76,7 @@ public class GameWindow {
      * The y-offset of the camera.
      */
     private double yViewportOffset = 0.0;
+
 
     /**
      * Creates a new GameWindow object.
@@ -80,9 +87,11 @@ public class GameWindow {
     public GameWindow(GameEngine model, int width, int height) {
         this.model = model;
         this.pane = new Pane();
+        this.pane.setPrefSize(width, height);
         this.width = width;
         this.height = height;
         this.scene = new Scene(pane, width, height);
+
 
         this.entityViews = new ArrayList<>();
 
@@ -94,6 +103,8 @@ public class GameWindow {
         this.backgroundDrawer = new BlockedBackground();
 
         backgroundDrawer.draw(model, pane);
+
+        this.informationGroup = new InformationGroup(model, pane);
     }
 
     /**
@@ -119,8 +130,20 @@ public class GameWindow {
      * Draws the game (and updates it).
      */
     private void draw() {
-        model.tick();
 
+        // Check that the game is in a finish state.
+        if (model.getGameState() == 1) {
+            pane.getChildren().clear();
+            // TODO draw a win state page.
+            return;
+        } else if (model.getGameState() == -1) {
+            // TODO drawn a lose state page.
+            pane.getChildren().clear();
+            return;
+        }
+
+        model.tick();
+        informationGroup.updateInformation();
         List<Entity> entities = model.getCurrentLevel().getEntities();
 
         for (EntityView entityView: entityViews) {

@@ -3,5 +3,6 @@
     "vertical.json",
     "empty.json",
     "default.json"
-  ]
+  ],
+  "extraLives": 3
 }

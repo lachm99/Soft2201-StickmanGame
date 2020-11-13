@@ -53,9 +53,21 @@ public interface LevelBuilder {
      */
     LevelBuilder setDimensions(double width, double height);
 
+
+    /**
+     * Sets the Target Completion time of the level.
+     * @param targetTime The seconds to complete the level without penalty.
+     * @return This instance of LevelBuilder
+     */
+    LevelBuilder setTargetTime(int targetTime);
+
+
     /**
      * Builds a Level object based on the previously set parameters.
      * @return The corresponding Level object
      */
     Level build();
+
+
+
 }

@@ -6,7 +6,6 @@ import stickman.entity.moving.other.Bullet;
 import stickman.entity.moving.other.Projectile;
 import stickman.entity.moving.player.Controllable;
 import stickman.entity.moving.player.StickMan;
-import stickman.entity.still.Win;
 import stickman.model.GameEngine;
 
 import java.util.ArrayList;
@@ -76,24 +75,49 @@ public class LevelManager implements Level {
     private GameEngine model;
 
     /**
+     * The current Score for this level
+     */
+    private int levelScore;
+
+
+    /**
+     * Ticks elapsed since the level started.
+     */
+    private long tickCounter;
+
+    /**
+     * The Target Time for this level.
+     */
+    private int targetTime;
+
+    /**
+     * Seconds elapsed since the level started.
+     */
+    private int timeElapsed;
+
+
+
+    /**
      * Creates a new LevelManager object.
      * @param model The GameEngine the level is in
      * @param filename The file the level is based off of
      * @param height The height of the level
      * @param width The width of the level
      * @param floorHeight The height of the floor
+     * @param targetTime The amount of seconds to count down until time penalty.
      * @param heroX The starting x of the hero
      * @param heroSize The size of the hero
      * @param entities The list of entities in the level
      * @param movingEntities The list of moving entities in the level
      * @param interactables The list of entities that can interact with the hero in the level
      */
-    public LevelManager(GameEngine model, String filename, double height, double width, double floorHeight, double heroX, String heroSize, List<Entity> entities, List<MovingEntity> movingEntities, List<Interactable> interactables) {
+    public LevelManager(GameEngine model, String filename, double height, double width, double floorHeight, int targetTime, double heroX, String heroSize, List<Entity> entities, List<MovingEntity> movingEntities, List<Interactable> interactables) {
         this.model = model;
         this.filename = filename;
         this.height = height;
         this.width = width;
         this.floorHeight = floorHeight;
+        this.targetTime = targetTime;
         this.entities = entities;
         this.movingEntities = movingEntities;
         this.interactables = interactables;
@@ -109,6 +133,8 @@ public class LevelManager implements Level {
         this.entities = new ArrayList<>(new HashSet<>(entities));
 
         this.active = true;
+        this.tickCounter = 0;
+        this.timeElapsed = 0;
 
     }
 
@@ -133,6 +159,7 @@ public class LevelManager implements Level {
         if (!active) {
             return;
         }
+        this.tickCounter ++;
 
         for (MovingEntity entity : this.movingEntities) {
             entity.tick(this.entities, this.hero.getXPos(), this.floorHeight);
@@ -142,6 +169,19 @@ public class LevelManager implements Level {
 
         // Remove inactive entities
         this.clearOutInactive();
+
+        // If a whole second has elapsed since last tick
+        if (this.tickCounter % 60 == 0) {
+            this.timeElapsed++;
+
+            if (timeElapsed < targetTime) {
+                // Nothing to points - additional points for early finish only calculated at the end.
+            } else if (timeElapsed == targetTime) {
+                this.levelScore += this.targetTime;
+            } else if (timeElapsed > targetTime) {
+                this.levelScore --;
+            }
+        }
     }
 
     /**
@@ -236,6 +276,23 @@ public class LevelManager implements Level {
     }
 
     @Override
+    public void loseALife() {
+        if (this.model != null) {
+            if (this.model.loseALife() <= 0) {
+                model.finishGame(false);
+            } else {
+                this.reset();
+            }
+        }
+    }
+
+    @Override
+    public void winLevel() {
+        this.adjustScore(Math.max(this.targetTime - this.timeElapsed, 0));
+        this.model.winLevel();
+    }
+
+    @Override
     public void shoot() {
         if (!this.hero.upgraded() || !active) {
             return;
@@ -254,15 +311,30 @@ public class LevelManager implements Level {
         this.projectiles.add(bullet);
     }
 
+
     @Override
-    public String getSource() {
-        return this.filename;
+    public Level deepCopy() {
+        return null;
     }
 
     @Override
-    public void win() {
-        this.active = false;
-
-        this.entities.add(new Win(hero.getXPos() - 200, hero.getYPos() - 200));
+    public int getCurrentScore() {
+        return this.levelScore;
     }
+
+    @Override
+    public void adjustScore(int amount) {
+        this.levelScore += amount;
+    }
+
+    @Override
+    public int getTimeElapsed() {
+        return this.timeElapsed;
+    }
+
+    @Override
+    public int getTargetTime() {
+        return targetTime;
+    }
+
 }

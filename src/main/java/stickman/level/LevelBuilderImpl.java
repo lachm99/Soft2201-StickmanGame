@@ -89,6 +89,12 @@ public class LevelBuilderImpl implements LevelBuilder {
     private double floorHeight;
 
     /**
+     * The Time in seconds to complete this level.
+     */
+    private int targetTime;
+
+
+    /**
      * The GameEngine the level exists within.
      */
     private GameEngine model;
@@ -150,9 +156,17 @@ public class LevelBuilderImpl implements LevelBuilder {
     }
 
     @Override
-    public Level build() {
-        return new LevelManager(model, file, height, width, floorHeight, heroX, heroSize, staticEntities, movingEntities, interactables);
+    public LevelBuilder setTargetTime(int targetTime){
+        this.targetTime = targetTime;
+        return this;
     }
+
+    @Override
+    public Level build() {
+        return new LevelManager(model, file, height, width, floorHeight, targetTime, heroX, heroSize, staticEntities, movingEntities, interactables);
+    }
+
+
 
     /**
      * Reads a json file and generates a Level object from it.
@@ -264,6 +278,12 @@ public class LevelBuilderImpl implements LevelBuilder {
 
             levelBuilder.addInteractable(flag);
             levelBuilder.addStaticEntity(flag);
+
+
+
+            int targetTime = Integer.parseInt(String.valueOf(object.get("targetTime")));
+            levelBuilder.setTargetTime(targetTime);
+
 
             return levelBuilder.build();
 

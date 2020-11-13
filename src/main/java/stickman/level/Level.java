@@ -75,9 +75,19 @@ public interface Level {
     boolean stopMoving();
 
     /**
-     * Resets the level.
+     * Resets the level entirely.
      */
     void reset();
+
+    /**
+     * Called when the hero dies.
+     */
+    void loseALife();
+
+    /**
+     * Called when the hero touches the flag.
+     */
+    void winLevel();
 
     /**
      * Makes the player shoot.
@@ -85,13 +95,29 @@ public interface Level {
     void shoot();
 
     /**
-     * Returns the source file of the level.
-     * @return The file the level is based off of
+     * Deep copies the current state of the level.
      */
-    String getSource();
+    Level deepCopy();
 
     /**
-     * Stops level and shows victory message.
+     * Gets the current score of this level
      */
-    void win();
+    int getCurrentScore();
+
+    /**
+     * Adjusts the current score of the level by some
+     * @param amount
+     */
+    void adjustScore(int amount);
+
+    /**
+     * Gets the seconds elapsed.
+     */
+    int getTimeElapsed();
+
+    /**
+     * Gets the target time for this level.
+     * @return the target time
+     */
+    int getTargetTime();
 }

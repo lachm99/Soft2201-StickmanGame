@@ -6,13 +6,50 @@ import stickman.level.Level;
  * Interface for the GameEngine. Describes the necessary behaviour
  * for running the game.
  */
-public interface GameEngine {
+public interface GameEngine extends Originator {
 
     /**
      * Gets the current running level.
      * @return The current level
      */
     Level getCurrentLevel();
+
+
+    /**
+     * Gets the current cumulative score for all previous levels
+     * @return Cumulative score.
+     */
+    int getCumulativeScore();
+
+    /**
+     * Adjusts the cumulative score by some int
+     * @param amount
+     */
+    void adjustCumulativeScore(int amount);
+
+    /**
+     * Find the number of lives still remaining before the game is lost entirely.
+     * @return
+     */
+    int getExtraLivesRemaining();
+
+    /**
+     * Handle the consequences of a life being lost.
+     */
+    int loseALife();
+
+    /** Handle the consequences of a single stage being won
+     *
+     */
+    void winLevel();
+
+    /**
+     * End the game -
+     * @param gameWon determines whether game is over due to all stages completed or all lives spent.
+     */
+    void finishGame(boolean gameWon);
+
+    int getGameState();
 
     /**
      * Makes the player jump.
@@ -39,7 +76,7 @@ public interface GameEngine {
     boolean stopMoving();
 
     /**
-     * Updates the scene every frame.
+     * Updates the scene every frame, returns the gamestate.
      */
     void tick();
 
@@ -48,6 +85,8 @@ public interface GameEngine {
      */
     void shoot();
 
+    void startLevel(int index);
+
     /**
      * Restarts the level.
      */
@@ -55,13 +94,24 @@ public interface GameEngine {
 
 
     /**
-     * Takes an image of the current GameEngine state.
+     * Requests a save - will call makeSnapshot and store the snapshot somewhere.
      */
     void save();
 
 
     /**
-     * Reconstruct gameEngines saved state.
+     * Requests a load - will pass in a saved snapshot to restoreSnapshot.
      */
     void load();
+
+
+
+    /**
+     *
+     * @return
+     */
+    Memento makeSnapshot();
+
+    void restoreSnapshot(Memento m);
+
 }

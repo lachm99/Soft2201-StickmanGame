@@ -2,8 +2,7 @@ package stickman.model;
 
 public class Memento {
 
-    public Memento(GameEngine ge) {
-        
+    public Memento(GameEngine originator) {
     }
 
 }

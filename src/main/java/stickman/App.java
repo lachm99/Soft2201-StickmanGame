@@ -28,14 +28,12 @@ public class App extends Application {
                     " as your code will fail to compile on Java 10 and below.");
         }
 
-        GameEngine model = new GameManager("levels/levels.json");
+        GameEngine model = new GameManager("levels/configFile.json");
         GameWindow window = new GameWindow(model, 640, 400);
-        window.run();
 
         primaryStage.setTitle("Stickman");
         primaryStage.setScene(window.getScene());
         primaryStage.show();
-
         window.run();
     }
 }
