@@ -14,7 +14,7 @@ public class StickMan extends MovingObject implements Controllable {
     /**
      * The maximum speed the player can move horizontally.
      */
-    public static final double HORIZONTAL_SPEED = 5;
+    public static final double HORIZONTAL_SPEED = 2;
 
     /**
      * The height of the player when normal sized.
