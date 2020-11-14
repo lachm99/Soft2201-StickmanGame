@@ -12,7 +12,7 @@ public class Memento {
     public Memento(GameEngine originator) {
         this.savedLevel = originator.getCurrentLevel().deepCopy();
         this.savedLevelIndex = originator.getLevelIndex();
-        this.savedLivesRemaining = originator.getExtraLivesRemaining();
+        this.savedLivesRemaining = originator.getLivesRemaining();
         this.savedCumulativeScore = originator.getCumulativeScore();
     }
 

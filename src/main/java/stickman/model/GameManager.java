@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Implementation of GameEngine. Manages the running of the game.
  */
-public class GameManager implements GameEngine {
+public class GameManager implements GameEngine, Originator {
 
     /**
      * The current level Index
@@ -45,7 +45,7 @@ public class GameManager implements GameEngine {
      * Number of Spare Lives remaining. 0 is okay.
      * If player loses life with 0 remaining, game over.
      */
-    private int extraLivesRemaining;
+    private int livesRemaining;
 
 
     /**
@@ -62,7 +62,7 @@ public class GameManager implements GameEngine {
      * Generates all levels, and selects the first one as the current level.
      */
     public GameManager(String configFile) {
-        this.extraLivesRemaining = this.readConfigFileLives(configFile);
+        this.livesRemaining = this.readConfigFileLives(configFile);
 
         this.levelFileNames = this.readConfigFileLevels(configFile);
         startLevel(0);
@@ -89,30 +89,31 @@ public class GameManager implements GameEngine {
     }
 
     @Override
-    public int getExtraLivesRemaining() {
-        return this.extraLivesRemaining;
-    }
-
-    @Override
-    public int loseALife() {
-        return this.extraLivesRemaining--;
+    public int getLivesRemaining() {
+        return this.livesRemaining;
     }
 
     @Override
     public void winLevel() {
         this.adjustCumulativeScore(this.getCurrentLevel().getCurrentScore());
+        // If more stages remain, increment level index and reset to that level.
         if (++levelIndex < this.levelFileNames.size()) {
             this.reset();
-        } else {
+        }
+        // Otherwise, game has been won. Do not reset the (now inactive) level.
+        else {
             this.getCurrentLevel().getEntities().add(new Win(this.getCurrentLevel().getHeroX() - 270, this.getCurrentLevel().getHeroY() - 100));
         }
     }
 
     @Override
     public void loseLevel() {
-        if (--this.extraLivesRemaining > 0) {
+        // If more lives remain, reset the current level entirely.
+        if (--this.livesRemaining > 0) {
             this.reset();
-        } else {
+        }
+        // Otherwise, The game has ended. Do not reset the (now inactive) level.
+        else {
             this.getCurrentLevel().getEntities().add(new GameOver(this.getCurrentLevel().getHeroX() - 270, this.getCurrentLevel().getHeroY() - 100));
         }
     }
@@ -197,16 +198,19 @@ public class GameManager implements GameEngine {
         return res;
     }
 
+
+    /**
+     * Retrieves the number of lives specified in a config file.
+     *
+     * @param config The config file
+     * @return The int number of lives to start with.
+     */
     private int readConfigFileLives(String config) {
         JSONParser parser = new JSONParser();
         try {
-
             Reader reader = new FileReader(config);
-
             JSONObject object = (JSONObject) parser.parse(reader);
-
             return  Integer.parseInt(String.valueOf(object.get("lives")));
-
         } catch (IOException e) {
             System.exit(10);
             return 0;
@@ -216,23 +220,35 @@ public class GameManager implements GameEngine {
     }
 
 
+    /**
+     * An Originator method, to capture the current state into a new memento
+     * @return a new Memento, built using the current Values of the GameEngine.
+     */
     @Override
     public Memento makeSnapshot() {
         return new Memento(this);
     }
 
+
+    /**
+     * An Originator method, to restore the current state to the values stored in:
+     * @param savedState - A memento capturing a former state.
+     */
     @Override
-    public void restoreSnapshot(Memento m) {
-        if (m.retrieveSavedLevel() == null) {
+    public void restoreSnapshot(Memento savedState) {
+        if (savedState.retrieveSavedLevel() == null) {
             return;
         }
-        this.currentLevel = m.retrieveSavedLevel().deepCopy();
-        this.levelIndex = m.retrieveSavedLevelIndex();
-        this.extraLivesRemaining = m.retrieveSavedLivesRemaining();
-        this.cumulativeScore = m.retrieveSavedCumulativeScore();
+        this.currentLevel = savedState.retrieveSavedLevel().deepCopy();
+        this.levelIndex = savedState.retrieveSavedLevelIndex();
+        this.livesRemaining = savedState.retrieveSavedLivesRemaining();
+        this.cumulativeScore = savedState.retrieveSavedCumulativeScore();
     }
 
 
+    /**
+     * A GameEngine method, to save the state. Implemented using Mementos.
+     */
     @Override
     public void save() {
         Memento saveState = this.makeSnapshot();
@@ -241,6 +257,10 @@ public class GameManager implements GameEngine {
         }
     }
 
+
+    /**
+     * A GameEngine method, to load the saved state. Implemented using Mementos.
+     */
     @Override
     public void load() {
         if (this.savedState != null) {

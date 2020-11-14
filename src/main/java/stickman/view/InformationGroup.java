@@ -55,7 +55,7 @@ public class InformationGroup {
     }
 
     public void updateInformation() {
-        extraLives.setText(String.format(" Lives: %4d", gameEngine.getExtraLivesRemaining()));
+        extraLives.setText(String.format(" Lives: %4d", gameEngine.getLivesRemaining()));
         cumulativeScore.setText(String.format(" Total: %04d", gameEngine.getCumulativeScore()));
         levelTimer.setText(String.format(" Timer: %03d", gameEngine.getCurrentLevel().getTimeElapsed()));
         levelScore.setText(String.format(" Score: %04d", gameEngine.getCurrentLevel().getCurrentScore()));

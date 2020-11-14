@@ -42,7 +42,7 @@ public interface Controllable extends MovingEntity {
 
     /**
      * Awards the hero with
-     * @param amount of points
+     * @param amount of points. Added to level score.
      */
     void awardPoints(int amount);
 
@@ -63,5 +63,10 @@ public interface Controllable extends MovingEntity {
      */
     void win();
 
-    Controllable copyToLevel(Level level);
+    /**
+     * A deep copy method, where the copy is exact except the stickman belongs to a new level - provided.
+     * @param copyOwner - The level that this cloned stickman belongs to.
+     * @return A new stickman, using a private constructor.
+     */
+    Controllable copyToLevel(Level copyOwner);
 }

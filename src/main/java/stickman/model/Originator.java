@@ -1,7 +1,20 @@
 package stickman.model;
 
+/**
+ * Idiomatic implementation of memento originator
+ */
+
 public interface Originator {
+    /**
+     * Construct a snapshot of the current state
+     * @return A new Memento
+     */
     Memento makeSnapshot();
-    void restoreSnapshot(Memento m);
+
+    /**
+     * Restore the originator to the state described by:
+     * @param snapshot - Some formerly constructed snapshot.
+     */
+    void restoreSnapshot(Memento snapshot);
 }
 

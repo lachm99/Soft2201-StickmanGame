@@ -75,7 +75,7 @@ public class StickMan extends MovingObject implements Controllable {
     private boolean leftFacing;
 
     /**
-     * Creates a new StickMan object.
+     * PUBLIC CONSTRUCTOR - returns a new StickMan object given starting information.
      * @param x The x-coordinate.
      * @param y The y-coordinate.
      * @param size The size of the player.
@@ -100,6 +100,13 @@ public class StickMan extends MovingObject implements Controllable {
 
         this.yPos -= this.height;
     }
+
+    /**
+     * PRIVATE CONSTRUCTOR. Called only by the copyToLevel method.
+     * Creates an exact copy of a supplied StickMan, only the new StickMan will belong to the supplied level.
+     * @param original
+     * @param copyOwner
+     */
 
     private StickMan(StickMan original, Level copyOwner) {
         super("ch_stand1.png", original.xPos, 0, original.height, original.width, Layer.FOREGROUND);
@@ -240,19 +247,20 @@ public class StickMan extends MovingObject implements Controllable {
     }
 
     /**
-     * Should never be used.
-     * @return A copy with no owner.
+     * There is no default copy method for the StickMan, since a StickMan must belong to a level.
+     * See copyToLevel for a deep copy method.
+     * @return a stickman copied to this level..
      */
     @Override
     public Entity copy() {
-        return this.copyToLevel(null);
+        return copyToLevel(this.level);
     }
 
 
     /**
-     * A deep copy method, where the copy is full except the stickman belongs to a new level - provided.
+     * A deep copy method, where the copy is exact except the stickman belongs to a new level - provided.
      * @param copyOwner - The level that this cloned stickman belongs to.
-     * @return A new stickman.
+     * @return A new stickman, using a private constructor.
      */
     @Override
     public Controllable copyToLevel(Level copyOwner) {

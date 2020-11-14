@@ -89,6 +89,11 @@ public interface MovingEntity extends Entity {
         return res;
     }
 
+
+    /**
+     * A default method for determining the worth of a moving entity.
+     * @return
+     */
     default int getWorth() {
         return 0;
     }

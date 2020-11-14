@@ -75,7 +75,9 @@ public interface Entity {
     }
 
     /**
-     * @return a deep copy of this entity.
+     * A default Entity deep copy. Certain Entity implementor classes may need a specific method with
+     * custom paramaters to enable their implementation specific copy.
+     * @return a Deep Copy of this entity.
      */
     Entity copy();
 }

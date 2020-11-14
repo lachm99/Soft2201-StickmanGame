@@ -75,17 +75,17 @@ public interface Level {
     boolean stopMoving();
 
     /**
-     * Resets the level entirely.
+     * Manually tell the owner GameEngine to reset the current stage.
      */
     void reset();
 
     /**
-     * Called when the hero dies.
+     * Called when the hero dies. Tells the GameEngine so that it can reset, or end the game.
      */
     void loseALife();
 
     /**
-     * Called when the hero touches the flag.
+     * Called when the hero touches the flag. Tells the GameEngine so it can transition, or end the game.
      */
     void win();
 

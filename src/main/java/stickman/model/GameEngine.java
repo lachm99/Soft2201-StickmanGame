@@ -6,15 +6,19 @@ import stickman.level.Level;
  * Interface for the GameEngine. Describes the necessary behaviour
  * for running the game.
  */
-public interface GameEngine extends Originator {
+public interface GameEngine {
 
     /**
-     * Gets the current running level.
+     * Gets the current running level object
      * @return The current level
      */
     Level getCurrentLevel();
 
 
+    /**
+     * Gets the current running level INDEX - (The stage number)
+     * @return the stage index.
+     */
     int getLevelIndex();
 
     /**
@@ -30,19 +34,10 @@ public interface GameEngine extends Originator {
     void adjustCumulativeScore(int amount);
 
     /**
-     * Find the number of lives still remaining before the game is lost entirely.
+     * Find the number of lives the player has.
      * @return
      */
-    int getExtraLivesRemaining();
-
-    /**
-     * Handle the consequences of a life being lost.
-     */
-    int loseALife();
-
-    /** Handle the consequences of a single stage being won
-     *
-     */
+    int getLivesRemaining();
 
     /**
      * Win the current level. Will check for overall victory
@@ -53,7 +48,6 @@ public interface GameEngine extends Originator {
      * Lose the current level. Will check for overall loss.
      */
     void loseLevel();
-
 
     /**
      * Makes the player jump.
@@ -103,23 +97,16 @@ public interface GameEngine extends Originator {
 
 
     /**
-     * Requests a save - will call makeSnapshot and store the snapshot somewhere.
+     * Called on keypress "q" - an implementor must have some infrastructure to save.
+     * A GameManager implements both GameEngine and Originator, so can use mementos to do this.
      */
     void save();
 
 
     /**
-     * Requests a load - will pass in a saved snapshot to restoreSnapshot.
+     * Called on keypress "l" - an implementor must have some infrastructure to load a saved state.
+     * A GameManager implements both GameEngine and Originator, so can use mementos to do this.
      */
     void load();
-
-
-    /**
-     *
-     * @return
-     */
-    Memento makeSnapshot();
-
-    void restoreSnapshot(Memento m);
 
 }
