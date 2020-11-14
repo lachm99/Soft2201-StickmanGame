@@ -1,8 +1,0 @@
-{
-  "levelFiles": [
-    "test/slimeOnRight.json",
-    "test/obstructed.json",
-    "test/normalstickman.json",
-    "test/largestickman.json"
-  ]
-}

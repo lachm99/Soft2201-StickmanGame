@@ -18,7 +18,7 @@ public class BulletTest {
 
     @Before
     public void setup() {
-        l = LevelBuilderImpl.generateFromFile("levels/test/normalstickman.json", null);
+        l = LevelBuilderImpl.generateFromFile("levels/empty.json", null);
         for (Entity e:l.getEntities()) {
             if (e instanceof StickMan) {
                 hero = (StickMan) e;

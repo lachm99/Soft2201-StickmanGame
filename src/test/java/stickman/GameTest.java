@@ -95,7 +95,7 @@ public class GameTest extends ApplicationTest {
         testEvent(rightRelease);
         testEvent(upPress);
         testEvent(upRelease);
-        sleep(2, TimeUnit.SECONDS);
+        sleep(4, TimeUnit.SECONDS);
         testEvent(leftRelease);
 
         testEvent(spacePress);
