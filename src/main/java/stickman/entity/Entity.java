@@ -4,7 +4,7 @@ package stickman.entity;
  * Interface describing the behaviours of Entity objects. All objects
  * in the level that are drawn implement this interface.
  */
-public interface Entity {
+public interface Entity extends EntityPrototyper {
 
     /**
      * Returns the current sprite path.
@@ -73,11 +73,4 @@ public interface Entity {
     enum Layer{
         BACKGROUND, FOREGROUND, EFFECT
     }
-
-    /**
-     * A default Entity deep copy. Certain Entity implementor classes may need a specific method with
-     * custom paramaters to enable their implementation specific copy.
-     * @return a Deep Copy of this entity.
-     */
-    Entity copy();
 }

@@ -28,7 +28,7 @@ public class App extends Application {
                     " as your code will fail to compile on Java 10 and below.");
         }
 
-        GameEngine model = new GameManager("levels/configFile.json");
+        GameEngine model = new GameManager("gameFiles/configFile.json");
         GameWindow window = new GameWindow(model, 640, 400);
 
         primaryStage.setTitle("Stickman");

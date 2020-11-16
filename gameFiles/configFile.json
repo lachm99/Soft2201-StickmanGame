@@ -1,0 +1,9 @@
+{
+  "levelFiles": [
+    "levelFiles/ONE.json",
+    "levelFiles/TWO.json",
+    "levelFiles/THREE.json",
+    "levelFiles/FOUR.json"
+  ],
+  "lives": 3
+}

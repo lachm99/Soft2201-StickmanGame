@@ -6,7 +6,7 @@ import stickman.level.Level;
  * Interface for the GameEngine. Describes the necessary behaviour
  * for running the game.
  */
-public interface GameEngine extends Originator, Caretaker{
+public interface GameEngine extends Originator, Caretaker {
 
     /**
      * Gets the current running level object

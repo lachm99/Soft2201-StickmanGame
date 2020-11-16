@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Implementation of GameEngine. Manages the running of the game.
  */
-public class GameManager implements GameEngine, Originator {
+public class GameManager implements GameEngine {
 
     /**
      * The current level Index
@@ -109,7 +109,8 @@ public class GameManager implements GameEngine, Originator {
     @Override
     public void loseLevel() {
         // If more lives remain, reset the current level entirely.
-        if (--this.livesRemaining > 0) {
+        if (this.livesRemaining > 0) {
+            this.livesRemaining--;
             this.reset();
         }
         // Otherwise, The game has ended. Do not reset the (now inactive) level.
@@ -185,7 +186,7 @@ public class GameManager implements GameEngine, Originator {
             // Get level file names
             while (iterator.hasNext()) {
                 String file = iterator.next();
-                res.add("levels/" + file);
+                res.add("gameFiles/" + file);
             }
 
         } catch (IOException e) {

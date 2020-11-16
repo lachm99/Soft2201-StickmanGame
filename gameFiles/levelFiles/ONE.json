@@ -1,0 +1,136 @@
+{
+  "stickmanSize": "normal",
+  "stickmanPos": {
+    "x": 50.0
+  },
+  "cloudVelocity": 3.2,
+  "levelDimensions": {
+    "width": 1000.0,
+    "height": 700.0,
+    "floorHeight": 500.0
+  },
+  "platforms": [
+    {
+      "x": 100.0,
+      "y": 480.0
+    },
+    {
+      "x": 100.0,
+      "y": 460.0
+    },
+    {
+      "x": 150.0,
+      "y": 400.0
+    },
+    {
+      "x": 170.0,
+      "y": 400.0
+    },
+    {
+      "x": 250.0,
+      "y": 400.0
+    },
+    {
+      "x": 350.0,
+      "y": 400.0
+    },
+    {
+      "x": 420.0,
+      "y": 400.0
+    },
+    {
+      "x": 520.0,
+      "y": 400.0
+    },
+    {
+      "x": 550.0,
+      "y": 400.0
+    },
+    {
+      "x": 620.0,
+      "y": 400.0
+    },
+    {
+      "x": 400.0,
+      "y": 300.0
+    },
+    {
+      "x": 450.0,
+      "y": 325.0
+    },
+    {
+      "x": 320.0,
+      "y": 250.0
+    },
+    {
+      "x": 750.0,
+      "y": 480.0
+    },
+    {
+      "x": 750.0,
+      "y": 460.0
+    }
+  ],
+  "mushrooms": [
+    {
+      "x": 230.0,
+      "y": 200.0
+    }
+  ],
+  "enemies": [
+    {
+      "x": 140.0,
+      "y": 450.0,
+      "path": "slimeBa.png",
+      "startLeft": false,
+      "strategy": "dumb"
+    },
+    {
+      "x": 180.0,
+      "y": 450.0,
+      "path": "slimeGa.png",
+      "startLeft": false,
+      "strategy": "dumb"
+    },
+    {
+      "x": 210.0,
+      "y": 450.0,
+      "path": "slimeBa.png",
+      "startLeft": true,
+      "strategy": "dumb"
+    },
+    {
+      "x": 270.0,
+      "y": 450.0,
+      "path": "slimeGa.png",
+      "startLeft": false,
+      "strategy": "dumb"
+    },
+    {
+      "x": 380.0,
+      "y": 450.0,
+      "path": "slimeBa.png",
+      "startLeft": true,
+      "strategy": "dumb"
+    },
+    {
+      "x": 550.0,
+      "y": 450.0,
+      "path": "slimeYa.png",
+      "startLeft": true,
+      "strategy": "follow"
+    },
+    {
+      "x": 700.0,
+      "y": 140.0,
+      "path": "slimeRa.png",
+      "startLeft": false,
+      "strategy": "follow"
+    }
+  ],
+  "flag": {
+    "x": 800.0,
+    "y": 460.0
+  },
+  "targetTime": 30
+}
