@@ -6,7 +6,7 @@ import stickman.level.Level;
  * Interface for the GameEngine. Describes the necessary behaviour
  * for running the game.
  */
-public interface GameEngine {
+public interface GameEngine extends Originator, Caretaker{
 
     /**
      * Gets the current running level object
@@ -94,19 +94,4 @@ public interface GameEngine {
      * @param index; from the filename with the specified index in the config file.
      */
     void startLevel(int index);
-
-
-    /**
-     * Called on keypress "q" - an implementor must have some infrastructure to save.
-     * A GameManager implements both GameEngine and Originator, so can use mementos to do this.
-     */
-    void save();
-
-
-    /**
-     * Called on keypress "l" - an implementor must have some infrastructure to load a saved state.
-     * A GameManager implements both GameEngine and Originator, so can use mementos to do this.
-     */
-    void load();
-
 }

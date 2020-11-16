@@ -247,7 +247,7 @@ public class GameManager implements GameEngine, Originator {
 
 
     /**
-     * A GameEngine method, to save the state. Implemented using Mementos.
+     * A Caretaker method, to store a generated Memento.
      */
     @Override
     public void save() {
@@ -257,9 +257,8 @@ public class GameManager implements GameEngine, Originator {
         }
     }
 
-
     /**
-     * A GameEngine method, to load the saved state. Implemented using Mementos.
+     * A Caretaker method, to load a stored memento.
      */
     @Override
     public void load() {
