@@ -1,7 +1,5 @@
 # StickMan
-
-Note: This document has been formatted with Markdown tags. Change the file type to .md and open with
-a markdown reader (e.g. IntelliJ) to see a clean output.
+A primitive platformer game solo developed for a Uni Subject. Largely built to test modularisation of code, with customisable levels and sprites etc.
 
 ## Sprites
 Mushroom: https://www.deviantart.com/adventuresmg64gaming/art/Super-Mario-World-Modern-1-UP-Mushroom-Sprite-666837189
